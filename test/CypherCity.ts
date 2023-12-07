@@ -4,9 +4,11 @@ import { generateProof } from "@semaphore-protocol/proof"
 import { expect } from "chai"
 import { solidityKeccak256 } from "ethers/lib/utils"
 import { run, ethers } from "hardhat"
-import { CypherCity } from "../build/typechain"
+import { CypherCity, ISemaphore__factory } from "../build/typechain"
 import { config } from "../package.json"
-import type { Signer } from "ethers"
+import { Contract, type Signer } from "ethers"
+import { SemaphoreEthers } from "@semaphore-protocol/data"
+import semaphoreABI from "./semaphoreABI.json"
 
 describe("CypherCity contract", () => {
     let postContract: CypherCity
@@ -91,6 +93,17 @@ describe("CypherCity contract", () => {
             )
 
             await expect(transaction).to.emit(postContract, "NewMessage").withArgs(feedback)
+        })
+    })
+
+    describe('members', () => {
+        it('', async () => {
+            const address = '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9'
+            const semaphore = new SemaphoreEthers("http://localhost:8545", {
+                address,
+            })
+            const group = await semaphore.getGroup(groupId.toString())
+            console.log({ group })
         })
     })
 })
