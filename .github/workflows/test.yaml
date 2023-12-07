@@ -27,6 +27,9 @@ jobs:
       - name: Install dependenciess
         run: pnpm install --frozen-lockfile
 
+      - name: Download snark-artifacts
+        run: pnpm run download:snark-artifacts
+
       - name: Start Hardhat node, Run Tests, and Shutdown Hardhat node
         run: |
           npx hardhat node &
