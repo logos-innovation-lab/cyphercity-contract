@@ -99,7 +99,7 @@ describe("CypherCity contract", () => {
     describe('members', () => {
         it('', async () => {
             const address = '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9'
-            const semaphore = new SemaphoreEthers("http://localhost:8545", {
+            const semaphore = new SemaphoreEthers("http://127.0.0.1:8545", {
                 address,
             })
             const group = await semaphore.getGroup(groupId.toString())
