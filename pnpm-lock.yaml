@@ -1,7 +1,7 @@
 lockfileVersion: '6.0'
 
 settings:
-  autoInstallPeers: true
+  autoInstallPeers: false
   excludeLinksFromLockfile: false
 
 dependencies:
@@ -42,10 +42,10 @@ devDependencies:
     version: 3.15.1(@semaphore-protocol/group@3.15.1)(@semaphore-protocol/identity@3.15.1)
   '@typechain/ethers-v5':
     specifier: ^10.2.0
-    version: 10.2.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.2)(typescript@4.9.5)
+    version: 10.2.1(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.2)(typescript@4.9.5)
   '@typechain/hardhat':
     specifier: ^6.1.5
-    version: 6.1.6(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(@typechain/ethers-v5@10.2.1)(ethers@5.7.2)(hardhat@2.19.2)(typechain@8.3.2)
+    version: 6.1.6(@ethersproject/providers@5.7.2)(@typechain/ethers-v5@10.2.1)(ethers@5.7.2)(hardhat@2.19.2)(typechain@8.3.2)
   '@types/chai':
     specifier: ^4.3.4
     version: 4.3.11
@@ -93,7 +93,7 @@ devDependencies:
     version: 0.8.5(hardhat@2.19.2)
   ts-node:
     specifier: ^10.9.1
-    version: 10.9.1(@types/node@20.10.4)(typescript@4.9.5)
+    version: 10.9.1(typescript@4.9.5)
   typechain:
     specifier: ^8.1.1
     version: 8.3.2(typescript@4.9.5)
@@ -1059,7 +1059,7 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
-  /@typechain/ethers-v5@10.2.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.2)(typescript@4.9.5):
+  /@typechain/ethers-v5@10.2.1(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.2)(typescript@4.9.5):
     resolution: {integrity: sha512-n3tQmCZjRE6IU4h6lqUGiQ1j866n5MTCBJreNEHHVWXa2u9GJTaeYyU1/k+1qLutkyw+sS6VAN+AbeiTqsxd/A==}
     peerDependencies:
       '@ethersproject/abi': ^5.0.0
@@ -1068,7 +1068,6 @@ packages:
       typechain: ^8.1.1
       typescript: '>=4.3.0'
     dependencies:
-      '@ethersproject/abi': 5.7.0
       '@ethersproject/providers': 5.7.2
       ethers: 5.7.2
       lodash: 4.17.21
@@ -1077,7 +1076,7 @@ packages:
       typescript: 4.9.5
     dev: true
 
-  /@typechain/hardhat@6.1.6(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(@typechain/ethers-v5@10.2.1)(ethers@5.7.2)(hardhat@2.19.2)(typechain@8.3.2):
+  /@typechain/hardhat@6.1.6(@ethersproject/providers@5.7.2)(@typechain/ethers-v5@10.2.1)(ethers@5.7.2)(hardhat@2.19.2)(typechain@8.3.2):
     resolution: {integrity: sha512-BiVnegSs+ZHVymyidtK472syodx1sXYlYJJixZfRstHVGYTi8V1O7QG4nsjyb0PC/LORcq7sfBUcHto1y6UgJA==}
     peerDependencies:
       '@ethersproject/abi': ^5.4.7
@@ -1087,9 +1086,8 @@ packages:
       hardhat: ^2.9.9
       typechain: ^8.1.1
     dependencies:
-      '@ethersproject/abi': 5.7.0
       '@ethersproject/providers': 5.7.2
-      '@typechain/ethers-v5': 10.2.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.2)(typescript@4.9.5)
+      '@typechain/ethers-v5': 10.2.1(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.2)(typescript@4.9.5)
       ethers: 5.7.2
       fs-extra: 9.1.0
       hardhat: 2.19.2(ts-node@10.9.1)(typescript@4.9.5)
@@ -2993,7 +2991,7 @@ packages:
       solc: 0.7.3(debug@4.3.4)
       source-map-support: 0.5.21
       stacktrace-parser: 0.1.10
-      ts-node: 10.9.1(@types/node@20.10.4)(typescript@4.9.5)
+      ts-node: 10.9.1(typescript@4.9.5)
       tsort: 0.0.1
       typescript: 4.9.5
       undici: 5.28.2
@@ -4743,7 +4741,7 @@ packages:
       typescript: 4.9.5
     dev: true
 
-  /ts-node@10.9.1(@types/node@20.10.4)(typescript@4.9.5):
+  /ts-node@10.9.1(typescript@4.9.5):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -4762,7 +4760,6 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.10.4
       acorn: 8.11.2
       acorn-walk: 8.3.1
       arg: 4.1.3
