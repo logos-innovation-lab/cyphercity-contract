@@ -2,21 +2,22 @@
 pragma abicoder v2;
 pragma solidity ^0.8.4;
 
-import "@semaphore-protocol/contracts/interfaces/ISemaphore.sol";
+import "./CypherCitySemaphore.sol";
 
 contract CypherCity {
     error IdentityAlreadyExists();
 
-    event NewMessage(string message);
     event NewIdentity(uint256 identityCommitment);
 
-    ISemaphore public semaphore;
+    uint256 public constant ADD_TO_GROUP = uint256(keccak256(abi.encodePacked("add_to_group")));
+
+    CypherCitySemaphore public semaphore;
 
     uint256 public groupId;
     mapping(uint256 => bool) public registeredIdentities;
 
     constructor(address semaphoreAddress, uint256 _groupId) {
-        semaphore = ISemaphore(semaphoreAddress);
+        semaphore = CypherCitySemaphore(semaphoreAddress);
         groupId = _groupId;
 
         semaphore.createGroup(groupId, 20, address(this));
@@ -33,8 +34,8 @@ contract CypherCity {
         emit NewIdentity(identityCommitment);
     }
 
-    function sendMessage(
-        string calldata message,
+    function addToGroup(
+        uint256 identityCommitment,
         uint256 merkleTreeRoot,
         uint256 nullifierHash,
         uint256 externalNullifier,
@@ -43,12 +44,20 @@ contract CypherCity {
         semaphore.verifyProof(
             groupId,
             merkleTreeRoot,
-            uint256(keccak256(abi.encodePacked(message))),
+            ADD_TO_GROUP,
             nullifierHash,
             externalNullifier,
             proof
         );
 
-        emit NewMessage(message);
+        this.joinGroup(identityCommitment);
+    }
+
+    function getMerkleRootCreationDate(uint256 merkleRoot) external view returns (uint256) {
+        return semaphore.getMerkleRootCreationDate(groupId, merkleRoot);
+    }
+
+    function getMerkleTreeRoot() external view returns (uint256) {
+        return semaphore.getMerkleTreeRoot(groupId);
     }
 }

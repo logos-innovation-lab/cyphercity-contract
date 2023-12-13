@@ -4,26 +4,40 @@ task("deploy", "Deploy a CypherCity contract")
     .addOptionalParam("semaphore", "Semaphore contract address", undefined, types.string)
     .addOptionalParam("group", "Group id", 42, types.int)
     .addOptionalParam("logs", "Print the logs", true, types.boolean)
-    .setAction(async ({ logs, semaphore: semaphoreAddress, group: groupId }, { ethers, run }) => {
-        if (!semaphoreAddress) {
-            const { semaphore } = await run("deploy:semaphore", {
-                logs
-            })
+    .setAction(async ({ logs, group: groupId }, { ethers, run }) => {
+        const { semaphore, semaphoreVerifierAddress, incrementalBinaryTreeAddress } = await run("deploy:semaphore", {
+            logs
+        })
 
-            semaphoreAddress = semaphore.address
-        }
+        const semaphoreAddress = await semaphore.address
+
+        const CypherCitySemaphoreFactory = await ethers.getContractFactory("CypherCitySemaphore", {
+            libraries: {
+                IncrementalBinaryTree: incrementalBinaryTreeAddress
+            },
+        })
+        const cypherCitySemaphore = await CypherCitySemaphoreFactory.deploy(semaphoreVerifierAddress)
+
+        await cypherCitySemaphore.deployed()
+
+        const cypherCitySemaphoreAddress = await cypherCitySemaphore.address
 
         const cypherCityFactory = await ethers.getContractFactory("CypherCity")
 
-        const cypherCityContract = await cypherCityFactory.deploy(semaphoreAddress, groupId, {gasLimit: 21000000})
+        const cypherCityContract = await cypherCityFactory.deploy(cypherCitySemaphoreAddress, groupId, {gasLimit: 21000000})
 
         await cypherCityContract.deployed()
 
-        const cypherCityContractAddress = await cypherCityContract.address
+        const cypherCityAddress = await cypherCityContract.address
 
         if (logs) {
-            console.info(`CypherCity contract has been deployed to: ${cypherCityContractAddress}`)
+            console.info(`CypherCity contract has been deployed to: ${cypherCityAddress}`)
         }
 
-        return cypherCityContract
+        return {
+            cypherCityContract,
+            cypherCityAddress,
+            cypherCitySemaphoreAddress,
+            semaphoreAddress,
+        }
     })

@@ -1,0 +1,39 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Install dependenciess
+        run: pnpm install --frozen-lockfile
+
+      - name: Download snark-artifacts
+        run: pnpm run download:snark-artifacts
+
+      - name: Start Hardhat node, Run Tests, and Shutdown Hardhat node
+        run: |
+          npx hardhat node &
+          HARDHAT_PID=$!
+          sleep 5 # Wait for Hardhat node to be fully up and running
+          pnpm test
+          kill $HARDHAT_PID
